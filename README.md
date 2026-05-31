@@ -8,9 +8,13 @@ server-side and publishes only sanitized JSON and static assets.
 
 ## Published Site
 
-Expected URL after GitHub Pages is enabled:
+Expected public URL:
 
-https://dartsim.github.io/ci-dashboard/
+https://dartsim.github.io/ci-status/
+
+The generated data is also published to this repository's `gh-pages` branch so
+the website can load it without committing generated dashboard data back to the
+website repository on every refresh.
 
 ## What It Shows
 

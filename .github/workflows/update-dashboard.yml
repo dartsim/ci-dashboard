@@ -31,7 +31,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           REQUIRE_RUNNER_STATUS: "true"
           TARGET_REPO: dartsim/dart
-          SITE_BASE_URL: https://dartsim.github.io/ci-dashboard/
+          SITE_BASE_URL: https://dartsim.github.io/ci-status/
         run: python scripts/collect.py
 
       - name: Publish generated site
