@@ -1,0 +1,52 @@
+{
+  "generated_at": "pending",
+  "github_hosted": {
+    "availability": "inferred",
+    "note": "Dashboard data has not been generated yet."
+  },
+  "jobs": {
+    "in_progress": [],
+    "latest_gpu": [],
+    "queued": [],
+    "recent_completed": []
+  },
+  "repository": "dartsim/dart",
+  "runner_status_available": false,
+  "schema_version": 1,
+  "self_hosted": {
+    "pools": [],
+    "runners": []
+  },
+  "summary": {
+    "in_progress_jobs": {
+      "by_label": {},
+      "total": 0
+    },
+    "queued_jobs": {
+      "by_label": {},
+      "total": 0
+    },
+    "recent": {
+      "duration_seconds": {
+        "max": null,
+        "p50": null,
+        "p95": null
+      },
+      "queue_seconds": {
+        "max": null,
+        "p50": null,
+        "p95": null
+      },
+      "sample_size": 0,
+      "success_rate": null
+    },
+    "self_hosted_runners": {
+      "busy": 0,
+      "idle": 0,
+      "offline": 0,
+      "online": 0,
+      "total": 0
+    }
+  },
+  "warnings": []
+}
