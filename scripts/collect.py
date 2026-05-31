@@ -22,6 +22,7 @@ API_BASE = os.environ.get("GITHUB_API_URL", "https://api.github.com").rstrip("/"
 SITE_BASE_URL = os.environ.get("SITE_BASE_URL", "")
 TOKEN = os.environ.get("DASHBOARD_GITHUB_TOKEN") or os.environ.get("GITHUB_TOKEN") or ""
 OUT_DIR = Path(os.environ.get("DASHBOARD_OUT_DIR", "public"))
+REQUIRE_RUNNER_STATUS = os.environ.get("REQUIRE_RUNNER_STATUS", "").lower() in {"1", "true", "yes"}
 RUN_LIMIT_ACTIVE = int(os.environ.get("RUN_LIMIT_ACTIVE", "80"))
 RUN_LIMIT_COMPLETED = int(os.environ.get("RUN_LIMIT_COMPLETED", "60"))
 SYSTEM_RUNNER_LABELS = {"self-hosted", "Linux", "X64", "ARM", "ARM64"}
@@ -359,6 +360,11 @@ def main() -> int:
     in_progress_jobs.sort(key=lambda job: job.get("duration_seconds") or 0, reverse=True)
 
     runners, runner_status_available = collect_runners()
+    if REQUIRE_RUNNER_STATUS and not runner_status_available:
+        raise RuntimeError(
+            "Self-hosted runner status is required, but the token could not read "
+            f"{REPO} runner metadata. Configure DASHBOARD_GITHUB_TOKEN with Administration: read."
+        )
 
     current_warnings = build_warnings(queued_jobs, runners)
     for warning in warnings:
@@ -428,4 +434,3 @@ if __name__ == "__main__":
     except Exception as exc:
         print(f"dashboard collection failed: {exc}", file=sys.stderr)
         raise
-
