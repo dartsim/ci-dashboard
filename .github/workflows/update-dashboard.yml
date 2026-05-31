@@ -16,18 +16,26 @@ jobs:
   update:
     name: Collect and deploy
     runs-on: ubuntu-latest
+    env:
+      DASHBOARD_GITHUB_TOKEN: ${{ secrets.DASHBOARD_GITHUB_TOKEN }}
     steps:
+      - name: Skip when dashboard token is missing
+        if: ${{ env.DASHBOARD_GITHUB_TOKEN == '' }}
+        run: echo "DASHBOARD_GITHUB_TOKEN is not configured; skipping dashboard refresh."
+
       - name: Checkout
+        if: ${{ env.DASHBOARD_GITHUB_TOKEN != '' }}
         uses: actions/checkout@v6
 
       - name: Set up Python
+        if: ${{ env.DASHBOARD_GITHUB_TOKEN != '' }}
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
       - name: Collect dashboard data
+        if: ${{ env.DASHBOARD_GITHUB_TOKEN != '' }}
         env:
-          DASHBOARD_GITHUB_TOKEN: ${{ secrets.DASHBOARD_GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ github.token }}
           REQUIRE_RUNNER_STATUS: "true"
           TARGET_REPO: dartsim/dart
@@ -35,6 +43,7 @@ jobs:
         run: python scripts/collect.py
 
       - name: Publish generated site
+        if: ${{ env.DASHBOARD_GITHUB_TOKEN != '' }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
